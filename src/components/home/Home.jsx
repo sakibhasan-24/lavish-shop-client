@@ -8,7 +8,7 @@ export default function Home() {
   const [category, setCategory] = useState("All");
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <Banner />
       <ProductsList category={category} setCategory={setCategory} />
       <ShowProducts />
