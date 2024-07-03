@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { productsList } from "../../../public/productsList";
+import useProducts from "../../hooks/products/useProducts";
 
 export default function ProductDetails() {
   const params = useParams();
   //   console.log(params.id);
   const [product, setProduct] = useState({});
+  const { loading, getProductsById } = useProducts();
   //   productsList
   useEffect(() => {
-    setProduct(productsList.find((item) => item._id == params.id));
+    // const products = getProductsById(params.id);
+    const fetchProduct = async (id) => {
+      const product = await getProductsById(id);
+      setProduct(product.product);
+    };
+    // setProduct(productsList.find((item) => item._id == params.id));
+    fetchProduct(params.id);
   }, [params.id]);
+  if (loading) return <h1>loading...</h1>;
   return (
     <div className="w-full sm:max-w-2xl  mx-auto md:max-w-6xl p-2 sm:p-8 flex flex-col sm:flex-row sm:gap-20 items-center justify-center">
-      <div className="w-40 bg-slate-300 ">
+      <div className="w-1/2 bg-slate-300 ">
         <img src={product.imageUrl} alt="img" />
       </div>
       <div className="flex flex-col gap-8">
