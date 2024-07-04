@@ -29,7 +29,7 @@ export default function ProductDetails() {
     e.preventDefault();
     // console.log("hello");
     dispatch(addToCart({ ...product, quantity }));
-    navigate("/cart");
+    navigate("/carts");
   };
   if (loading) return <h1>loading...</h1>;
 

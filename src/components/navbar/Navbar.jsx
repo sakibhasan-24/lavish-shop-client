@@ -48,7 +48,7 @@ export default function Navbar() {
           Categories
         </Link>
         {cartItem.length > 0 && (
-          <Link to="">
+          <Link to="/carts">
             <div
               tabIndex={0}
               role="button"
