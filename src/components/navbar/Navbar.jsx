@@ -85,13 +85,13 @@ export default function Navbar() {
         </Link>
       </div>
       <div className="hidden lg:flex items-center gap-4">
-        <Link to="/signin">
+        <Link to="/login">
           <Button
             type="primary"
             shape="round"
             icon={<LoginOutlined />}
             size="large"
-            className="bg-white text-purple-600 border-none hover:bg-yellow-300 transition-all duration-300"
+            className="bg-white text-purple-600 border-none hover:bg-purple-300 transition-all duration-300"
           >
             Sign in
           </Button>
@@ -104,7 +104,7 @@ export default function Navbar() {
         title="Menu"
         placement="right"
         onClose={closeDrawer}
-        visible={drawerVisible}
+        open={drawerVisible}
         closable={true}
       >
         <div className="flex flex-col gap-4">
