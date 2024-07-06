@@ -101,9 +101,11 @@ export default function Carts() {
               )
             ).toFixed(2)}
           </p>
-          <button className="bg-slate-600 text-slate-50 rounded-lg font-bold px-4 py-2">
-            Checkout
-          </button>
+          <Link to="/shipping">
+            <button className="bg-slate-600 text-slate-50 rounded-lg font-bold px-4 py-2">
+              Checkout
+            </button>
+          </Link>
         </div>
       </section>
     </div>

@@ -3,6 +3,7 @@ import useUsers from "../../hooks/user/useUsers";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { userInfoSetUp } from "../../redux/slices/userSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -13,6 +14,8 @@ export default function Login() {
   const [name, setName] = useState("");
 
   // const [register, setRegister] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
   const { loading, userLogin, userSignUp } = useUsers();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
@@ -26,6 +29,7 @@ export default function Login() {
       if (res.data.success) toast.success(res.data.message);
       console.log(res, "from login page");
       dispatch(userInfoSetUp(res.data));
+      navigate(location.state?.from || "/");
     } catch (error) {
       toast.error(error.message);
       console.log(error, "from login page");
@@ -44,6 +48,7 @@ export default function Login() {
         if (res.data.success) toast.success(res.data.message);
         console.log(res, "from sign up page");
         dispatch(userInfoSetUp(res.data));
+        navigate(location.state?.from || "/");
       } catch (error) {
         console.log(error, "from sign up page");
         toast.error(error.message);

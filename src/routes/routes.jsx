@@ -5,6 +5,8 @@ import ProductDetails from "../pages/productDetails/ProductDetails";
 import Carts from "../pages/carts/Carts";
 import Login from "../pages/credentials/Login";
 import Registration from "../pages/credentials/Registration";
+import ShippingAddress from "../pages/ShippingAddress/ShippingAddress";
+import Private from "./Private";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Registration />,
+      },
+      {
+        path: "/shipping",
+        element: (
+          <Private>
+            <ShippingAddress />
+          </Private>
+        ),
       },
     ],
   },
