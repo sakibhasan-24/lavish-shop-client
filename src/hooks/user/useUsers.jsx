@@ -36,5 +36,23 @@ export default function useUsers() {
       setLoading(false);
     }
   };
-  return { loading, userLogin, userLogOut };
+  const userSignUp = async (userInformation) => {
+    setLoading(true);
+    try {
+      const res = await axiosPublic.post(
+        "/api/v1/users/register",
+        userInformation,
+        {
+          withCredentials: true,
+        }
+      );
+      //   console.log(res);
+      return res;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  return { loading, userLogin, userLogOut, userSignUp };
 }

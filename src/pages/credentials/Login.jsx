@@ -7,7 +7,13 @@ import { userInfoSetUp } from "../../redux/slices/userSlice";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { loading, userLogin } = useUsers();
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
+
+  // const [register, setRegister] = useState(false);
+  const { loading, userLogin, userSignUp } = useUsers();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
   //   console.log(userInfo);
@@ -26,9 +32,23 @@ export default function Login() {
     }
   };
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     console.log("sign up");
+    if (registerPassword !== confirmPassword) {
+      toast.error("Password does not match");
+      return;
+    } else {
+      try {
+        const res = await userSignUp({ name, email, password });
+        if (res.data.success) toast.success(res.data.message);
+        console.log(res, "from sign up page");
+        dispatch(userInfoSetUp(res.data));
+      } catch (error) {
+        console.log(error, "from sign up page");
+        toast.error(error.message);
+      }
+    }
   };
   return (
     <div className="my-12 w-full  sm:max-w-5xl mx-auto">
@@ -81,16 +101,25 @@ export default function Login() {
                     className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-50"
                     type="text"
                     placeholder="Name"
+                    onChange={(e) => setName(e.target.value)}
                   />
                   <input
                     className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-50"
                     type="email"
                     placeholder="Email"
+                    onChange={(e) => setRegisterEmail(e.target.value)}
                   />
                   <input
                     className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-50"
                     type="password"
                     placeholder="Password"
+                    onChange={(e) => setRegisterPassword(e.target.value)}
+                  />
+                  <input
+                    className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-50"
+                    type="password"
+                    placeholder="confirm Password"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                   <button
                     onClick={() =>
