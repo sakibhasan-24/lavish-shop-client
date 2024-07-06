@@ -1,21 +1,33 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   HomeOutlined,
   AppstoreOutlined,
   ShoppingOutlined,
   UserOutlined,
   LoginOutlined,
+  LogoutOutlined,
   MenuOutlined,
 } from "@ant-design/icons";
 import { Button, Drawer } from "antd";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+// import { userLogOutAction } from "../../redux/slices/userSlice";
+import useUsers from "../../hooks/user/useUsers";
+import { toast } from "react-toastify";
+import { userLogOutAction } from "../../redux/slices/userSlice";
 
 export default function Navbar() {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const { cartItem } = useSelector((state) => state.cart);
-  console.log(cartItem);
+  const { userInfo } = useSelector((state) => state.user);
+  const { userLogOut, loading } = useUsers();
+  // console.log(cartItem)
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  // userLogOut
   const showDrawer = () => {
     setDrawerVisible(true);
   };
@@ -23,7 +35,22 @@ export default function Navbar() {
   const closeDrawer = () => {
     setDrawerVisible(false);
   };
+  // userLogOutAction
 
+  // handle logout
+
+  const handleLogout = async () => {
+    try {
+      const res = await userLogOut();
+      // console.log(res, "from nav");
+      if (res?.data?.success) toast.success(res.data.message);
+      dispatch(userLogOutAction());
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
   return (
     <div className="flex items-center justify-between p-4 bg-gradient-to-r from-orange-500 to-purple-600 shadow-xl">
       <div className="flex items-center gap-2">
@@ -85,17 +112,39 @@ export default function Navbar() {
         </Link>
       </div>
       <div className="hidden lg:flex items-center gap-4">
-        <Link to="/login">
-          <Button
-            type="primary"
-            shape="round"
-            icon={<LoginOutlined />}
-            size="large"
-            className="bg-white text-purple-600 border-none hover:bg-purple-300 transition-all duration-300"
-          >
-            Sign in
-          </Button>
-        </Link>
+        {userInfo ? (
+          <div className="dropdown dropdown-bottom">
+            <div tabIndex={0} role="button" className="btn">
+              {userInfo?.user?.name}
+            </div>
+            <div
+              tabIndex={0}
+              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-24  shadow"
+            >
+              <button className="w-full text-left p-2 rounded hover:bg-gray-200">
+                <Link to="/profile">Profile</Link>
+              </button>
+              <button
+                onClick={handleLogout}
+                className="w-full text-left p-2 rounded hover:bg-gray-200"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        ) : (
+          <Link to="/login">
+            <Button
+              type="primary"
+              shape="round"
+              icon={<LoginOutlined />}
+              size="large"
+              className="bg-white text-purple-600 border-none hover:bg-purple-300 transition-all duration-300"
+            >
+              Sign in
+            </Button>
+          </Link>
+        )}
       </div>
       <div className="lg:hidden">
         <MenuOutlined className="text-2xl text-white" onClick={showDrawer} />

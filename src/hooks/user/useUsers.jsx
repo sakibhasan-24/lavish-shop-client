@@ -14,7 +14,7 @@ export default function useUsers() {
           withCredentials: true,
         }
       );
-      console.log(res);
+      //   console.log(res);
       return res;
     } catch (error) {
       console.log(error);
@@ -22,5 +22,19 @@ export default function useUsers() {
       setLoading(false);
     }
   };
-  return { loading, userLogin };
+  const userLogOut = async () => {
+    setLoading(true);
+    try {
+      const res = await axiosPublic.post("/api/v1/users/logout", {
+        withCredentials: true,
+      });
+      //   console.log(res);
+      return res;
+    } catch (error) {
+      console.log(error, "from api");
+    } finally {
+      setLoading(false);
+    }
+  };
+  return { loading, userLogin, userLogOut };
 }
