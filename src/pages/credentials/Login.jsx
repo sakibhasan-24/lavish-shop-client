@@ -38,13 +38,18 @@ export default function Login() {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+    console.log("login");
     console.log("sign up");
     if (registerPassword !== confirmPassword) {
       toast.error("Password does not match");
       return;
     } else {
       try {
-        const res = await userSignUp({ name, email, password });
+        const res = await userSignUp({
+          name,
+          email: registerEmail,
+          password: registerPassword,
+        });
         if (res.data.success) toast.success(res.data.message);
         console.log(res, "from sign up page");
         dispatch(userInfoSetUp(res.data));

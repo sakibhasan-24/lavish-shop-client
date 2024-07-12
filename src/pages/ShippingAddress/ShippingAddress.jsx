@@ -9,12 +9,12 @@ export default function ShippingAddress() {
   //   console.log(shippingAddressFromRedux);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [address, setAddress] = useState(cart?.shippingAddress?.address || "");
-  const [city, setCity] = useState(cart?.shippingAddress?.city || "");
+  const [address, setAddress] = useState(cart?.deliveryAddress?.address || "");
+  const [city, setCity] = useState(cart?.deliveryAddress?.city || "");
   const [postalCode, setPostalCode] = useState(
-    cart?.shippingAddress?.postalCode || ""
+    cart?.deliveryAddress?.postalCode || ""
   );
-  const [country, setCountry] = useState(cart?.shippingAddress?.country || "");
+  const [country, setCountry] = useState(cart?.deliveryAddress?.country || "");
   const handleDeliveryAddress = (e) => {
     // e.preventDefault();
     e.preventDefault();
@@ -22,6 +22,7 @@ export default function ShippingAddress() {
     dispatch(saveDeliveryAddress({ address, city, postalCode, country }));
     navigate("/payment");
   };
+
   return (
     <div className="w-full sm:max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <h1 className="text-center font-semibold text-slate-500 my-6 text-2xl">

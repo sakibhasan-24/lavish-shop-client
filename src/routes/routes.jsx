@@ -7,6 +7,9 @@ import Login from "../pages/credentials/Login";
 import Registration from "../pages/credentials/Registration";
 import ShippingAddress from "../pages/ShippingAddress/ShippingAddress";
 import Private from "./Private";
+import Payments from "../pages/payment/Payments";
+import PlaceOrders from "../pages/placeorders/PlaceOrders";
+import Orders from "../pages/order/Orders";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +41,30 @@ const router = createBrowserRouter([
         element: (
           <Private>
             <ShippingAddress />
+          </Private>
+        ),
+      },
+      {
+        path: "/order/:orderId",
+        element: (
+          <Private>
+            <Orders />
+          </Private>
+        ),
+      },
+      {
+        path: "/payment",
+        element: (
+          <Private>
+            <Payments />
+          </Private>
+        ),
+      },
+      {
+        path: "/placeorder",
+        element: (
+          <Private>
+            <PlaceOrders />
           </Private>
         ),
       },
