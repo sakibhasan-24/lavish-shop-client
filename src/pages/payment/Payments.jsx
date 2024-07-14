@@ -44,19 +44,19 @@ export default function Payments() {
           <input
             type="radio"
             name="payment"
-            value="Stripe"
-            checked={paymentMethod === "Stripe"}
+            value="SSl"
+            checked={paymentMethod === "SSl"}
             onChange={handlePaymentChange}
             className="radio radio-primary"
           />
-          <span className="label-text">Stripe</span>
+          <span className="label-text">SSL</span>
         </label>
         <label className="flex items-center space-x-3">
           <input
             type="radio"
             name="payment"
             value="PayPal"
-            checked={paymentMethod === "PayPal"}
+            checked={paymentMethod === "SSL"}
             onChange={handlePaymentChange}
             className="radio radio-primary"
           />

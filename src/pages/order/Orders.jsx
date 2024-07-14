@@ -6,7 +6,8 @@ import { Spin } from "antd";
 export default function Orders() {
   const [orders, setOrders] = useState(null);
   const { orderId } = useParams();
-  const { getOrderById, loading } = useOrders();
+
+  const { getOrderById, loading, paymentServer } = useOrders();
   console.log(orderId);
   useEffect(() => {
     const readData = async (id) => {
@@ -17,7 +18,24 @@ export default function Orders() {
     if (orderId) readData(orderId);
   }, [orderId]);
 
-  // console.log(orders.user);
+  console.log(orders);
+
+  const handlePayment = async () => {
+    try {
+      const result = await paymentServer(
+        {
+          email: orders?.user?.email,
+          name: orders?.user?.name,
+          totalPrice: orders.totalPrice,
+        },
+        orderId
+      );
+      console.log(result);
+      if (result?.data) window.location.href = result.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   if (loading || !orders)
     return (
       <div className="flex my-6 items-center justify-center  ">
@@ -42,7 +60,7 @@ export default function Orders() {
             </p>
           </div>
           {orders?.isDelivered ? (
-            <p className="text-green-500 p-2  bg-green-500 font-semibold">
+            <p className="text-slate-900 p-2  bg-green-500 font-semibold">
               {orders?.deliveredAt}
             </p>
           ) : (
@@ -57,8 +75,8 @@ export default function Orders() {
 
             <p className="text-md font-semibold ">{orders.paymentMethod}</p>
             {orders?.isPaid ? (
-              <p className="text-green-500 p-2 bg-green-500 font-semibold my-4">
-                {orders?.paidAt}
+              <p className="text-slate-50 p-2 bg-green-500 font-semibold my-4">
+                {new Date(orders.paidAt).toLocaleString()}
               </p>
             ) : (
               <p className="bg-red-300 p-2  text-slate-600 rounded-md my-4">
@@ -115,6 +133,15 @@ export default function Orders() {
               <p>{orders.totalPrice}</p>
             </div>
           </div>
+          <button
+            onClick={handlePayment}
+            disabled={orders.isPaid}
+            className={`w-full px-2 py-1 rounded-md font-bold text-white bg-blue-950 ${
+              orders.isPaid ? "bg-gray-500" : ""
+            }`}
+          >
+            {orders.isPaid ? "Paid" : "Pay Now"}
+          </button>
         </div>
       </section>
     </div>
