@@ -10,6 +10,7 @@ import Private from "./Private";
 import Payments from "../pages/payment/Payments";
 import PlaceOrders from "../pages/placeorders/PlaceOrders";
 import Orders from "../pages/order/Orders";
+import Profile from "../pages/profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,14 @@ const router = createBrowserRouter([
         element: (
           <Private>
             <Orders />
+          </Private>
+        ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <Private>
+            <Profile />
           </Private>
         ),
       },

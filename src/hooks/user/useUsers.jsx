@@ -54,5 +54,23 @@ export default function useUsers() {
       setLoading(false);
     }
   };
-  return { loading, userLogin, userLogOut, userSignUp };
+  const updateUser = async (userInformation, id) => {
+    setLoading(true);
+    try {
+      const res = await axiosPublic.put(
+        `/api/v1/users/update/${id}`,
+        userInformation,
+        {
+          withCredentials: true,
+        }
+      );
+      //   console.log(res);
+      return res;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  return { loading, userLogin, userLogOut, userSignUp, updateUser };
 }
