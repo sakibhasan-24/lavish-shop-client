@@ -16,6 +16,7 @@ export default function PlaceOrders() {
     paymentMethod,
     shippingPrice,
     taxPrice,
+    cartPrice,
     totalPrice,
   } = cart;
 
@@ -34,6 +35,7 @@ export default function PlaceOrders() {
       orderItems: cart.cartItem,
       shippingPrice,
       taxPrice,
+      productPrice: cartPrice,
       totalPrice,
       shippingAddress: deliveryAddress,
       paymentMethod: paymentMethod,
