@@ -34,6 +34,21 @@ export default function useOrders() {
     }
   };
 
+  const getMyOrders = async (id) => {
+    setLoading(true);
+    try {
+      const res = await axiosPublic.get(`/api/v1/orders/get-my-orders/${id}`, {
+        withCredentials: true,
+      });
+      console.log(res);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const paymentServer = async (data, id) => {
     setLoading(true);
     try {
@@ -48,5 +63,5 @@ export default function useOrders() {
     }
   };
 
-  return { createOrders, loading, getOrderById, paymentServer };
+  return { createOrders, loading, getMyOrders, getOrderById, paymentServer };
 }
